@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-
+import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import Item from '../components/Item';
 
-export default function Home({ navigation }) {
+export default function Home() {
 
     const [pokemonList, setPokemonList] = useState([]);
 
@@ -19,20 +18,20 @@ export default function Home({ navigation }) {
         FetchPokemon();
     }, []);
 
+    const renderItem = ({ item }) => {
+        const idNumber = item.url.split('/')[6]
+        return (
+            <Item name={item.name} id={idNumber}/>
+        )
+    }
 
     return (
         <View>
-
             <FlatList
                 data={pokemonList}
                 renderItem={renderItem}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.name}
             />
-
-
-            <Item name="Bulbasaur" id="1" />
-            <Item name="Charmander" id="4" />
-            <Item name="Pikachu" id="25" />
         </View>
     )
 }
